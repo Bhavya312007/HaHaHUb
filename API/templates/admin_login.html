@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex justify-center items-center h-screen">
+    <div class="bg-white p-6 shadow-lg rounded-lg w-96">
+        <h2 class="text-2xl font-bold text-center mb-4">Admin Login</h2>
+
+        <!-- ✅ Fix: Added 'method' and 'action' -->
+        <form id="login-form" method="POST" action="/admin_login">
+            <div class="mb-4">
+                <label class="block text-gray-700">Username</label>
+                <input type="text" name="username" class="w-full px-3 py-2 border rounded" required>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700">Password</label>
+                <input type="password" name="password" class="w-full px-3 py-2 border rounded" required>
+            </div>
+
+            <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
+                Login
+            </button>
+        </form>
+
+        <!-- ✅ Fix: Display Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="mt-4">
+                {% for category, message in messages %}
+                    <p class="text-{{ 'red-500' if category == 'error' else 'green-500' }} text-center">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}
+    </div>
+
+</body>
+</html>

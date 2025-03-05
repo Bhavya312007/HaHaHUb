@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Joke App - Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* Fade-in animation for new jokes */
+        .joke-container {
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        }
+        .joke-container.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Button click animation */
+        .vote-buttons button {
+            transition: transform 0.2s ease-in-out;
+        }
+        .vote-buttons button:active {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white flex flex-col items-center justify-center min-h-screen p-6">
+    <a href="/login" class="fixed top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded shadow-lg">
+        Login
+    </a>
+    <header class="mb-6">
+        <h1 class="text-3xl font-bold text-center text-yellow-400">😂 Welcome to the Joke App! 🎭</h1>
+    </header>
+
+    <main class="bg-gray-800 p-6 rounded-xl shadow-lg w-full max-w-lg text-center">
+        {% if joke %}
+            <div class="joke-container show" data-joke-id="{{ joke.id|tojson }}">
+                <p class="joke-text text-lg font-semibold mb-4 text-white">{{ joke.joke }}</p>
+                <div class="vote-buttons flex justify-center gap-4">
+                    <!-- Upvote Button -->
+                    <button onclick="vote('up', {{ joke.id|tojson }})"
+                        class="bg-green-600 text-white px-4 py-2 rounded-full flex items-center gap-2 transition hover:bg-green-700 active:scale-110">
+                        👍 Upvote
+                    </button>
+                    <!-- Downvote Button -->
+                    <button onclick="vote('down', {{ joke.id|tojson }})"
+                        class="bg-red-600 text-white px-4 py-2 rounded-full flex items-center gap-2 transition hover:bg-red-700 active:scale-110">
+                        👎 Downvote
+                    </button>
+                </div>
+            </div>
+        {% else %}
+            <p class="text-lg text-gray-300">No jokes available.</p>
+        {% endif %}
+    </main>
+
+    <script>
+        function vote(direction, jokeId) {
+            let button = document.querySelector(`button[onclick="vote('${direction}', ${jokeId})"]`);
+        
+            // Apply animation
+            if (direction === 'up') {
+                button.classList.add('animate-bounce');
+            } else {
+                button.classList.add('shake-effect');  // Ensure this CSS exists
+            }
+        
+            fetch(`/api/vote/${direction}/${jokeId}`, { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    return fetch('/api/joke');  // Get new joke
+                } else {
+                    throw new Error(data.message);  // Handle errors properly
+                }
+            })
+            .then(response => response.json())
+            .then(newJoke => {
+                if (newJoke && newJoke.joke) {
+                    let jokeContainer = document.querySelector('.joke-container');
+                    
+                    setTimeout(() => {
+                        button.classList.remove('animate-bounce', 'shake-effect');
+                    }, 500);
+        
+                    // Animate fade-out before changing the joke
+                    jokeContainer.classList.remove('show');
+                    
+                    setTimeout(() => {
+                        jokeContainer.setAttribute('data-joke-id', newJoke.id);
+                        document.querySelector('.joke-text').textContent = newJoke.joke;
+                        jokeContainer.classList.add('show');
+                    }, 500);
+                } else {
+                    throw new Error("No joke found.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert(error.message);
+            });
+        }
+        
+    </script>
+    
+    
+</body>
+</html>

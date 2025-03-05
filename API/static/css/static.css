@@ -1,0 +1,37 @@
+.vote-btn {
+    font-size: 24px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.vote-btn:hover {
+    transform: scale(1.2);
+}
+
+.upvote.clicked {
+    color: green;
+    animation: bounce 0.3s ease-in-out;
+}
+
+.downvote.clicked {
+    color: red;
+    animation: shake 0.3s ease-in-out;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+.shake-effect {
+    animation: shake 0.3s ease-in-out;
+}

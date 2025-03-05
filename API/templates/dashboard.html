@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-6">
+        <!-- Header Section -->
+        <div class="flex justify-between items-center p-4 bg-white shadow rounded">
+            <h1 class="text-2xl font-bold">User Dashboard</h1>
+            <div>
+                <a href="/change_password" class="bg-green-500 text-white px-4 py-2 rounded mr-2">Change Password</a>
+                <a href="/logout" class="bg-red-500 text-white px-4 py-2 rounded">Logout</a>
+            </div>
+        </div>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="mt-4">
+                    {% for category, message in messages %}
+                        <div class="p-2 text-white rounded mb-2 {% if category == 'success' %} bg-green-500 {% else %} bg-red-500 {% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Submit a Joke Section -->
+        <div class="bg-white p-6 shadow rounded mt-6">
+            <h2 class="text-xl font-semibold">Submit a Joke</h2>
+            <form action="/submit_joke" method="POST">
+                <textarea name="joke" required class="w-full p-2 border rounded mt-2" placeholder="Write your joke here..."></textarea>
+                <button type="submit" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+            </form>
+        </div>
+
+        <!-- Display Submitted Jokes -->
+        <div class="bg-white p-6 shadow rounded mt-6">
+            <h2 class="text-xl font-semibold">Your Jokes</h2>
+            {% if jokes %}
+                <ul class="mt-2">
+                    {% for joke in jokes %}
+                        <li class="p-2 border-b">{{ joke.joke }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-gray-500">You haven't submitted any jokes yet.</p>
+            {% endif %}
+        </div>
+
+    </div>
+</body>
+</html>

@@ -185,7 +185,6 @@ def submit_joke():
     return render_template('submit_joke.html')
 
 @app.route('/api/vote/<direction>/<int:joke_id>', methods=['POST'])
-@login_required
 def api_vote(direction, joke_id):
     db = get_db()
     joke = db.execute("SELECT id, upvotes, downvotes FROM jokes WHERE id = ?", (joke_id,)).fetchone()

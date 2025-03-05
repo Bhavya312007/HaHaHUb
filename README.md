@@ -1,4 +1,3 @@
-# HaHaHub
 # HaHaHub - A Flask-Based Joke Sharing Platform
 
 HaHaHub is a web application that allows users to submit, view, and vote on jokes. It features user authentication, an admin dashboard, and an API for joke retrieval and voting. The application is currently hosted at [bhavya31.pythonanywhere.com](https://bhavya31.pythonanywhere.com).

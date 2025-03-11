@@ -46,7 +46,7 @@ HaHaHub is a web application that allows users to submit, view, and vote on joke
 
 ## API Usage
 
-### 1. Get a Random Joke
+## 1. Get a Random Joke
 **Endpoint:** `/api/joke`  
 **Method:** `GET`  
 **Response:**
@@ -56,13 +56,12 @@ HaHaHub is a web application that allows users to submit, view, and vote on joke
     "joke": "Why don’t skeletons fight each other? They don’t have the guts."
 }
 ```
-
-**Curl Command**
+**Curl Command:**
+```bash
+curl -X GET https://hahahub.bhavya31.hackclub.app/api/joke
 ```
-curl -X GET http://hahahub.bhavya31.hackclub.app/api/joke
-```
 
-### 2. Vote on a Joke
+## 2. Vote on a Joke
 **Endpoint:** `/api/vote/<direction>/<int:joke_id>`  
 **Method:** `POST`  
 **Parameters:**
@@ -77,12 +76,12 @@ curl -X GET http://hahahub.bhavya31.hackclub.app/api/joke
     "joke": "Another joke after voting"
 }
 ```
-**Curl Command**
-```
-curl -X POST http://hahahub.bhavya31.hackclub.app/api/vote/up/26
+**Curl Command:**
+```bash
+curl -X POST https://hahahub.bhavya31.hackclub.app/api/vote/up/26
 ```
 
-### 3. Register a New User
+## 3. Register a New User
 **Endpoint:** `/register`  
 **Method:** `POST`  
 **Request Body:**
@@ -99,7 +98,7 @@ curl -X POST http://hahahub.bhavya31.hackclub.app/api/vote/up/26
 }
 ```
 
-### 4. Login User
+## 4. Login User
 **Endpoint:** `/login`  
 **Method:** `POST`  
 **Request Body:**
@@ -116,7 +115,7 @@ curl -X POST http://hahahub.bhavya31.hackclub.app/api/vote/up/26
 }
 ```
 
-### 5. Submit a Joke
+## 5. Submit a Joke
 **Endpoint:** `/submit_joke`  
 **Method:** `POST`  
 **Request Body:**
@@ -132,7 +131,7 @@ curl -X POST http://hahahub.bhavya31.hackclub.app/api/vote/up/26
 }
 ```
 
-### 6. Get User Dashboard Jokes
+## 6. Get User Dashboard Jokes
 **Endpoint:** `/user`  
 **Method:** `GET`  
 **Response:**
@@ -145,7 +144,7 @@ curl -X POST http://hahahub.bhavya31.hackclub.app/api/vote/up/26
 }
 ```
 
-### 7. Admin Dashboard
+## 7. Admin Dashboard
 **Endpoint:** `/admin`  
 **Method:** `GET`  
 **Response:**
@@ -161,7 +160,7 @@ curl -X POST http://hahahub.bhavya31.hackclub.app/api/vote/up/26
 }
 ```
 
-### 8. Edit a Joke (Admin Only)
+## 8. Edit a Joke (Admin Only)
 **Endpoint:** `/admin/edit/<int:joke_id>`  
 **Method:** `POST`  
 **Request Body:**
@@ -177,7 +176,7 @@ curl -X POST http://hahahub.bhavya31.hackclub.app/api/vote/up/26
 }
 ```
 
-### 9. Delete a Joke (Admin Only)
+## 9. Delete a Joke (Admin Only)
 **Endpoint:** `/admin/delete/<int:joke_id>`  
 **Method:** `POST`  
 **Response:**
@@ -187,7 +186,7 @@ curl -X POST http://hahahub.bhavya31.hackclub.app/api/vote/up/26
 }
 ```
 
-### 10. Change Password
+## 10. Change Password
 **Endpoint:** `/change_password`  
 **Method:** `POST`  
 **Request Body:**
@@ -204,6 +203,15 @@ curl -X POST http://hahahub.bhavya31.hackclub.app/api/vote/up/26
     "status": "success"
 }
 ```
+**Curl Command:**
+```bash
+curl -X POST https://hahahub.bhavya31.hackclub.app/api/change_password \
+     -H "Content-Type: application/json" \
+     -d '{"old_password": "password123", "new_password": "newpassword456"}' \
+     -b cookies.txt
+```
+
+
 
 ## Deployment
 
